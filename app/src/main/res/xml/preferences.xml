@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="hide_sync"
+        android:title="hide done"
+        android:summary="hide done item"
+        android:defaultValue="false" />
+
+</PreferenceScreen>

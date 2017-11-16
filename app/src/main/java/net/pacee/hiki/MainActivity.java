@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -87,13 +89,30 @@ public class MainActivity extends AppCompatActivity implements OnConnectionFaile
         updateNotes();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.action_setting:
+                Intent s = new Intent(this, PrefActivity.class);
+                startActivity(s);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @OnClick(R.id.activity_main_fab)
     public void click()
     {
-        Toast.makeText(this,"Click",Toast.LENGTH_SHORT);
+        Toast.makeText(this,"Click",Toast.LENGTH_SHORT).show();
         Log.e("Main","Whyyy");
-
-
 
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 

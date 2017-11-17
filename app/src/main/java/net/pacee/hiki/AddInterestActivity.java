@@ -30,6 +30,7 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import net.pacee.hiki.Model.Interest;
+import net.pacee.hiki.Model.Interest_;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -61,23 +62,31 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
     @NotEmpty
     @BindView(R.id.bt_addinterest_addLocation)
     TextView tvAddInterestLocation;
-    Date date;
+
+    @BindView(R.id.bt_addinterest_save)
+    TextView saveBtn;
+    private Date date;
 
     Calendar calendar;
 
-    Place place;
+    private Place place;
 
-    SimpleDateFormat dateFormat;
+    private SimpleDateFormat dateFormat;
 
     private GoogleApiClient mGoogleApiClient;
 
-    int PLACE_PICKER_REQUEST = 1;
+    private int PLACE_PICKER_REQUEST = 1;
 
-    private Box<Interest> interestBox;
-    private Query<Interest> interestQuery;
+    Box<Interest> interestBox;
+    Query<Interest> interestQuery;
 
-    Validator validator;
+    private Validator validator;
 
+    private long interestId;
+
+    private Interest interest;
+
+    private boolean isUpdating;
     //endregion
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,6 +107,24 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
 
         validator = new Validator(this);
         validator.setValidationListener(this);
+
+        isUpdating = false;
+        Bundle extra = getIntent().getExtras();
+        if(extra != null) {
+            interestId = extra.getLong("interestId", 0);
+            Log.i("AddInterestActivity","interestId:"+interestId);
+            interestQuery = interestBox.query().equal(Interest_.__ID_PROPERTY, interestId).build();
+            interest = interestQuery.findUnique();
+
+            etAddInterestTitle.setText(interest.getName()+(interest.getDone()?"(Done)":""));
+            etAddInterestNote.setText(interest.getComment());
+            tvAddInterestDate.setText(dateFormat.format(interest.getDate()));
+            tvAddInterestLocation.setText(interest.getAdress());
+            isUpdating = true;
+            saveBtn.setText("UPDATE");
+
+        }
+
     }
 
     //region  save
@@ -205,17 +232,39 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
 //region onValidation of form
     @Override
     public void onValidationSucceeded() {
-        CharSequence name = place.getName();
-        String id = place.getId();
-        LatLng latLng = place.getLatLng();
-        Double lat = latLng.latitude;
-        Double lng = latLng.longitude;
-        CharSequence adress = place.getAddress();
-        String note = etAddInterestNote.getText().toString();
+        if(!isUpdating) {
+            CharSequence name = etAddInterestTitle.getText();
+            String id = place.getId();
+            LatLng latLng = place.getLatLng();
+            Double lat = latLng.latitude;
+            Double lng = latLng.longitude;
+            CharSequence adress = place.getAddress();
+            String note = etAddInterestNote.getText().toString();
 
 
-        Interest i = new Interest(0,id,name.toString(),adress.toString(),lat,lng,note,date,false);
-        interestBox.put(i);
+            Interest i = new Interest(0, id, name.toString(), adress.toString(), lat, lng, note, date, false);
+            interestBox.put(i);
+        }
+        else
+        {
+            interest.setName(etAddInterestTitle.getText().toString());
+            //si l'adresse est différente
+            if(place.getLatLng().latitude != interest.getLat())
+            {
+                LatLng latLng = place.getLatLng();
+                Double lat = latLng.latitude;
+                Double lng = latLng.longitude;
+                CharSequence adress = place.getAddress();
+
+                interest.setAdress(adress.toString());
+                interest.setLat(lat);
+                interest.setLng(lng);
+            }
+            String note = etAddInterestNote.getText().toString();
+            interest.setComment(note);
+            interestBox.put(interest);
+        }
+        finish();
     }
 
     @Override

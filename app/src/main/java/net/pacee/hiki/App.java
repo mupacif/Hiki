@@ -2,14 +2,12 @@ package net.pacee.hiki;
 
 import android.app.Application;
 
+
 import net.pacee.hiki.Model.MyObjectBox;
 
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidObjectBrowser;
 
-/**
- * Created by mupac_000 on 12-11-17.
- */
 
 public class App extends Application {
 

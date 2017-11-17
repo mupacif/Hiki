@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.objectbox'
 
 android {
+    defaultConfig {
+
+        vectorDrawables.useSupportLibrary = true
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {

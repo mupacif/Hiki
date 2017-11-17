@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/activity_main2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+            >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="X"
+                    style="@style/toolBarTextFont"/>
+
+                <android.support.v4.widget.Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"></android.support.v4.widget.Space>
+
+                <TextView
+                    android:id="@+id/bt_addinterest_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="save"
+                    android:text="SAVE"
+                    style="@style/toolBarTextFont"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_addinterest_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:ems="10"
+                android:hint="Title"
+                style="@style/toolBarTextFont"
+                android:inputType="text" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/ic_event_available_black_48px" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/addinterest_marginLeft_iconEditText"
+                android:id="@+id/tv_addInterest_chooseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="pickDate"
+                android:hint="set calendar time"
+                tools:text="pick some date bro"
+
+                />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lines" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/ic_place_black_48px" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/addinterest_marginLeft_iconEditText"
+                android:id="@+id/bt_addinterest_addLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="add Location"
+                android:onClick="onClickToMap" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lines" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="?android:attr/actionModePasteDrawable" />
+
+            <EditText
+                android:layout_marginLeft="@dimen/addinterest_marginLeft_iconEditText"
+                android:id="@+id/et_addinterest_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add notes"
+                android:inputType="textMultiLine" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Hiki</string>
+    <string name="hide_sync">hide_sync</string>
 </resources>

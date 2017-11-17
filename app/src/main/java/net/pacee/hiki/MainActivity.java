@@ -1,6 +1,8 @@
 package net.pacee.hiki;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +38,8 @@ import net.pacee.hiki.Model.Interest_;
 
 import java.util.Date;
 import java.util.List;
+
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 
 public class MainActivity extends AppCompatActivity implements OnConnectionFailedListener {
 
@@ -84,7 +88,14 @@ public class MainActivity extends AppCompatActivity implements OnConnectionFaile
                 .build();
 
         interestBox = ((App) getApplication()).getBoxStore().boxFor(Interest.class);
-        interestQuery = interestBox.query().order(Interest_.date).build();
+        boolean hide_sync = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.hide_sync), false);
+
+
+        if(hide_sync)
+        interestQuery = interestBox.query().equal(Interest_.done, false).order(Interest_.date).build();
+        else
+        interestQuery = interestBox.query().order(Interest_.done).build();
+
 
         updateNotes();
     }

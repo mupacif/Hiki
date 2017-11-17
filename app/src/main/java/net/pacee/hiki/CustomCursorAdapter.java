@@ -55,6 +55,8 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
         Interest interest = interests.get(position);
         holder.name.setText(interest.getName());
         holder.name.setChecked(interest.getDone());
+
+        holder.itemView.setTag(interest.getId());
         Log.e("adapter","name:"+interest.getName());
     }
 

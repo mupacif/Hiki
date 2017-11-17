@@ -7,14 +7,15 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="20dp">
     <CheckedTextView
-        android:layout_width="364dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Text"
         android:id="@+id/place_name"
         android:textColor="@color/colorAccent"
-        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:checked="false"
         android:paddingTop="4dp"

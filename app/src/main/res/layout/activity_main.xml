@@ -12,7 +12,8 @@
         android:id="@+id/rv_main_main"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        ></android.support.v7.widget.RecyclerView>
+        android:layoutAnimation="@anim/layout_animation_fall_down"
+        />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/activity_main_fab"
         android:layout_width="wrap_content"

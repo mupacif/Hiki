@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddInterestActivity" android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity android:name=".AddInterestActivity" android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".PrefActivity" android:parentActivityName=".MainActivity" />
     </application>
 

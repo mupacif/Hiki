@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -126,8 +128,42 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
         }
 
     }
+    @OnClick(R.id.bt_addinterest_done)
+    public void done(View view)
+    {
 
-    //region  save
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        // Get the layout inflater
+//        LayoutInflater inflater = getLayoutInflater();
+//
+//        // Inflate and set the layout for the dialog
+//        // Pass null as the parent view because its going in the dialog layout
+//        builder.setView(inflater.inflate(R.layout.dialog_interest_finished, null))
+//                // Add action buttons
+//                .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.
+//                    }
+//                })
+//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        dialog.cancel();
+//                    }
+//                });
+//            builder.create().show();
+
+        FragmentManager fm = getSupportFragmentManager();
+        InterestDoneFragment idf = InterestDoneFragment.newInstance();
+        idf.setListener(new InterestDoneFragment.DoneDialogListener() {
+            @Override
+            public void result(String comment, float rating, boolean recommended) {
+                Toast.makeText(AddInterestActivity.this,comment,Toast.LENGTH_SHORT).show();
+            }
+        });
+        idf.show(fm,"done");
+    }
+//region  save
     @OnClick(R.id.bt_addinterest_save)
     public void save(View view)
     {
@@ -137,7 +173,6 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
             Toast.makeText(this, "please select a location", Toast.LENGTH_LONG).show();
     }
 //endregion
-
 //region pickDate
 @OnClick(R.id.ll_addInterest_choseDate)
     public void pickDate(View view) {

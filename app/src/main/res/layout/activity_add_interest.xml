@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:id="@+id/activity_main2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-            >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,11 +27,11 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/bt_addinterest_exit"
+                    style="@style/toolBarTextFont"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="X"
-                    style="@style/toolBarTextFont"
-                    android:id="@+id/bt_addinterest_exit"/>
+                    android:text="X" />
 
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"
@@ -40,32 +40,32 @@
 
                 <TextView
                     android:id="@+id/bt_addinterest_save"
+                    style="@style/toolBarTextFont"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SAVE"
-                    style="@style/toolBarTextFont"/>
+                    android:text="SAVE" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/et_addinterest_title"
+                style="@style/toolBarTextFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:ems="10"
                 android:hint="Title"
-                style="@style/toolBarTextFont"
                 android:inputType="text" />
         </LinearLayout>
 
 
         <LinearLayout
+            android:id="@+id/ll_addInterest_choseDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="20dp"
-            android:id="@+id/ll_addInterest_choseDate">
+            android:padding="20dp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -74,10 +74,10 @@
                 app:srcCompat="@drawable/ic_event_available_black_48px" />
 
             <TextView
-                android:layout_marginLeft="@dimen/addinterest_marginLeft_iconEditText"
                 android:id="@+id/tv_addInterest_chooseDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/addinterest_marginLeft_iconEditText"
                 android:hint="set calendar time"
                 tools:text="pick some date bro"
 
@@ -92,12 +92,12 @@
             android:background="@color/lines" />
 
         <LinearLayout
+            android:id="@+id/ll_addInterest_choseLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="20dp"
-            android:id="@+id/ll_addInterest_choseLocation">
+            android:padding="20dp">
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -106,12 +106,11 @@
                 app:srcCompat="@drawable/ic_place_black_48px" />
 
             <TextView
-                android:layout_marginLeft="@dimen/addinterest_marginLeft_iconEditText"
                 android:id="@+id/bt_addinterest_addLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="add Location"
- />
+                android:layout_marginLeft="@dimen/addinterest_marginLeft_iconEditText"
+                android:hint="add Location" />
         </LinearLayout>
 
 
@@ -134,14 +133,23 @@
                 app:srcCompat="?android:attr/actionModePasteDrawable" />
 
             <EditText
-                android:layout_marginLeft="@dimen/addinterest_marginLeft_iconEditText"
                 android:id="@+id/et_addinterest_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/addinterest_marginLeft_iconEditText"
                 android:hint="Add notes"
                 android:inputType="textMultiLine" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/bt_addinterest_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Done"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
+
+
 </LinearLayout>

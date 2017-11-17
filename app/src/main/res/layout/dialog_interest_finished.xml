@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:gravity="center_horizontal">
+
+    <EditText
+        android:id="@+id/et_dialog_interest_finished_comment"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="20dp"
+        android:layout_weight="0.22"
+        android:hint="add Comment"/>
+
+    <RatingBar
+        android:id="@+id/rb_dialog_interest_finished_comment"
+        style="@style/Widget.AppCompat.RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="Add a comment"
+        android:numStars="5"
+        android:rating="2.5"
+        android:stepSize="0.5" />
+
+    <CheckedTextView
+        android:id="@+id/ctv_dialog_interest_finished_comment"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="@string/recommend"
+         />
+
+    <Button
+        android:id="@+id/bt__dialog_interest_finished_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.04"
+        android:text="Button" />
+</LinearLayout>

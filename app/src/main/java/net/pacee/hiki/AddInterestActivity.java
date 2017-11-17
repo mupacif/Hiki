@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -89,6 +90,10 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
     private Interest interest;
 
     private boolean isUpdating;
+
+    @BindView(R.id.bt_addinterest_done)
+    Button button;
+
     //endregion
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,38 +132,30 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
 
         }
 
+        if(isUpdating) {
+            button.setVisibility(View.VISIBLE);
+            if(interest.getDone())
+              button.setClickable(interest.getDone());
+        }
     }
+
+    /***
+     * Triggered when the user click on "done"
+     * @param view
+     */
     @OnClick(R.id.bt_addinterest_done)
     public void done(View view)
     {
-
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        // Get the layout inflater
-//        LayoutInflater inflater = getLayoutInflater();
-//
-//        // Inflate and set the layout for the dialog
-//        // Pass null as the parent view because its going in the dialog layout
-//        builder.setView(inflater.inflate(R.layout.dialog_interest_finished, null))
-//                // Add action buttons
-//                .setPositiveButton("Done", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.
-//                    }
-//                })
-//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int id) {
-//                        dialog.cancel();
-//                    }
-//                });
-//            builder.create().show();
 
         FragmentManager fm = getSupportFragmentManager();
         InterestDoneFragment idf = InterestDoneFragment.newInstance();
         idf.setListener(new InterestDoneFragment.DoneDialogListener() {
             @Override
             public void result(String comment, float rating, boolean recommended) {
-                Toast.makeText(AddInterestActivity.this,comment,Toast.LENGTH_SHORT).show();
+                interest.setDone(true);
+                interestBox.put(interest);
+                //TODO: save in parse server
+                finish();
             }
         });
         idf.show(fm,"done");

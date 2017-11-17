@@ -79,6 +79,11 @@ public class InterestDoneFragment extends DialogFragment implements TextView.OnE
         dismiss();
     }
 
+    @OnClick(R.id.ctv_dialog_interest_finished_comment)
+    public void setRecommend(View view)
+    {
+        recommend.toggle();
+    }
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

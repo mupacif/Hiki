@@ -6,9 +6,6 @@ import android.preference.PreferenceFragment;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 
-/**
- * Created by mupac_000 on 16-11-17.
- */
 
 public class PrefFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 

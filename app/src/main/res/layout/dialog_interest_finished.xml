@@ -29,9 +29,10 @@
         android:id="@+id/ctv_dialog_interest_finished_comment"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:drawableLeft="?android:attr/listChoiceIndicatorMultiple"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:paddingTop="10dp"
         android:text="@string/recommend"
          />
 
@@ -40,5 +41,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.04"
-        android:text="Button" />
+        android:text="DONE" />
 </LinearLayout>

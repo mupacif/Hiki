@@ -46,4 +46,6 @@ dependencies {
     annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
     // When using Kotlin use kapt instead:
     // kapt "io.objectbox:objectbox-processor:$objectboxVersion"
+
+    compile 'com.mobsandgeeks:android-saripaar:2.0.3'
 }

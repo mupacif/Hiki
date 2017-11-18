@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:minHeight="20dp"
         android:layout_weight="0.22"
-        android:hint="add Comment"/>
+        android:hint="add Comment"
+        android:imeOptions="actionDone"/>
 
     <RatingBar
         android:id="@+id/rb_dialog_interest_finished_comment"

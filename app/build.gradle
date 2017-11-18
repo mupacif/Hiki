@@ -48,4 +48,5 @@ dependencies {
     // kapt "io.objectbox:objectbox-processor:$objectboxVersion"
 
     compile 'com.mobsandgeeks:android-saripaar:2.0.3'
+    compile 'com.parse:parse-android:1.16.3'
 }

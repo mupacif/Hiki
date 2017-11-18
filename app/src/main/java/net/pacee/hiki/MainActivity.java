@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.objectbox.Box;
+import io.objectbox.query.LazyList;
 import io.objectbox.query.Query;
 
 
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.rv_main_main)
     RecyclerView rc;
 
-    List<Interest> interests;
+    LazyList<Interest> interests;
     private Paint p = new Paint();
 
 
@@ -200,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
             interestQuery = interestBox.query().order(Interest_.done).build();
 
 
-        this.interests = interestQuery.find();
+        this.interests = interestQuery.findLazy();
         adapter.setInterests(interests);
         for(Interest i : interests)
             Log.e("main","text:"+i);

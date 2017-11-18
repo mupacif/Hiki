@@ -18,15 +18,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.objectbox.query.LazyList;
 
 
-/**
- * Created by mupac_000 on 11-11-17.
- */
 
 public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapter.VH>{
     private Cursor cursor;
-    List<Interest> interests;
+    LazyList<Interest> interests;
     private Context context;
     private EventListener listener;
     public void setEventListener(EventListener listener)
@@ -60,7 +58,7 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
         Log.e("adapter","name:"+interest.getName());
     }
 
-    public void setInterests(List<Interest> interests)
+    public void setInterests(LazyList<Interest> interests)
     {
         this.interests = interests;
         notifyDataSetChanged();

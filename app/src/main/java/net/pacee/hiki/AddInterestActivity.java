@@ -31,6 +31,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import net.pacee.hiki.Model.Interest;
 import net.pacee.hiki.Model.Interest_;
@@ -137,6 +142,9 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
             if(interest.getDone())
               button.setClickable(interest.getDone());
         }
+
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this);
     }
 
     /***
@@ -154,7 +162,25 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
             public void result(String comment, float rating, boolean recommended) {
                 interest.setDone(true);
                 interestBox.put(interest);
-                //TODO: save in parse server
+
+                if(recommended) {
+                    ParseObject recommanded = new ParseObject("interest");
+                    recommanded.put("name",interest.getName());
+                    recommanded.put("position",new ParseGeoPoint(interest.getLat(),interest.getLng()));
+                    recommanded.put("rating",rating);
+                    recommanded.put("comment",comment);
+                  //TODO : user id   recommanded.put("userId",id);
+                    recommanded.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if(e == null)
+                            {
+                                Log.i("Parse","recommendation save");
+                            }
+                        }
+                    });
+                }
+
                 finish();
             }
         });
@@ -350,7 +376,7 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
         }
     }
 //endregion
-    //region onPressBack
+//region onPressBack
 @Override
 public void onBackPressed() {
 
@@ -368,5 +394,4 @@ public void onBackPressed() {
 
 }
 //endregion
-
 }

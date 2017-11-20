@@ -196,9 +196,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(hide_sync)
-            interestQuery = interestBox.query().equal(Interest_.done, false).order(Interest_.date).build();
+            interestQuery = interestBox.query().equal(Interest_.done, false)/*.order(Interest_.date)*/.build();
         else
-            interestQuery = interestBox.query().order(Interest_.done).build();
+            interestQuery = interestBox.query()./*order(Interest_.done).*/build();
 
 
         this.interests = interestQuery.findLazy();

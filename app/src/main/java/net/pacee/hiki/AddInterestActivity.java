@@ -73,6 +73,9 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
 
     @BindView(R.id.bt_addinterest_save)
     TextView saveBtn;
+
+    @BindView(R.id.bt_addinterest_exit)
+    TextView exitBtn;
     private Date date;
 
     Calendar calendar;
@@ -130,21 +133,30 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
 
             etAddInterestTitle.setText(interest.getName()+(interest.getDone()?"(Done)":""));
             etAddInterestNote.setText(interest.getComment());
-            tvAddInterestDate.setText(dateFormat.format(interest.getDate()));
+            if(interest.getDate()!=null)
+             tvAddInterestDate.setText(dateFormat.format(interest.getDate()));
+
             tvAddInterestLocation.setText(interest.getAdress());
             isUpdating = true;
             saveBtn.setText("UPDATE");
 
+
+            if(interest.getDone()) {
+                saveBtn.setText("");
+                exitBtn.setText("BACK");
+            }
         }
 
         if(isUpdating) {
             button.setVisibility(View.VISIBLE);
-            if(interest.getDone())
-              button.setClickable(interest.getDone());
+            if(interest.getDone()) {
+                button.setClickable(interest.getDone());
+                button.setVisibility(View.GONE);
+            }
         }
 
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this);
+
+
     }
 
     /***
@@ -222,18 +234,20 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
     @OnClick(R.id.bt_addinterest_exit)
     public void exit()
     {
+        if(!interest.getDone() || isUpdating) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Really Exit?")
+                    .setMessage("Are you sure you want to exit?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-        new AlertDialog.Builder(this)
-                .setTitle("Really Exit?")
-                .setMessage("Are you sure you want to exit?")
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        finish();
-                    }
-                }).create().show();
-
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            finish();
+                        }
+                    }).create().show();
+        }else {
+            finish();
+        }
     }
 
 //endregion
@@ -381,16 +395,21 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
 public void onBackPressed() {
 
 
-    new AlertDialog.Builder(this)
-            .setTitle("Really Exit?")
-            .setMessage("Are you sure you want to exit?")
-            .setNegativeButton(android.R.string.no, null)
-            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+    //prevent exit if not done
+    if(!interest.getDone() || isUpdating) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Really Exit?")
+                    .setMessage("Are you sure you want to exit?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-                public void onClick(DialogInterface arg0, int arg1) {
-                    AddInterestActivity.super.onBackPressed();
-                }
-            }).create().show();
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            AddInterestActivity.super.onBackPressed();
+                        }
+                    }).create().show();
+    }else {
+        finish();
+    }
 
 }
 //endregion

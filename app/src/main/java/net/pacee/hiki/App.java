@@ -3,6 +3,8 @@ package net.pacee.hiki;
 import android.app.Application;
 
 
+import com.parse.Parse;
+
 import net.pacee.hiki.Model.MyObjectBox;
 
 import io.objectbox.BoxStore;
@@ -23,7 +25,9 @@ public class App extends Application {
         if (BuildConfig.DEBUG) {
             new AndroidObjectBrowser(boxStore).start(this);
         }
-    }
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this);
+        }
 
     public BoxStore getBoxStore() {
         return boxStore;

@@ -25,7 +25,6 @@ android {
 }
 
 dependencies {
-
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -38,15 +37,13 @@ dependencies {
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
-
     compile "io.objectbox:objectbox-android:$objectboxVersion"
     // some useful Kotlin extension functions
     // compile "io.objectbox:objectbox-kotlin:$objectboxVersion"
-
     annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
     // When using Kotlin use kapt instead:
     // kapt "io.objectbox:objectbox-processor:$objectboxVersion"
-
     compile 'com.mobsandgeeks:android-saripaar:2.0.3'
     compile 'com.parse:parse-android:1.16.3'
+    compile 'com.android.support:support-annotations:26.0.0-alpha1'
 }

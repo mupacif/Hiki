@@ -35,6 +35,7 @@ import io.objectbox.query.LazyList;
 import io.objectbox.query.Query;
 
 
+import net.pacee.hiki.Adapters.CustomInterestAdapter;
 import net.pacee.hiki.Model.Interest;
 import net.pacee.hiki.Model.Interest_;
 
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private Box<Interest> interestBox;
     private Query<Interest> interestQuery;
 
-    CustomCursorAdapter adapter;
+    CustomInterestAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,12 +66,12 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        adapter = new CustomCursorAdapter(getApplicationContext());
+        adapter = new CustomInterestAdapter(getApplicationContext());
         rc.setLayoutManager(new LinearLayoutManager(this));
         rc.setAdapter(adapter);
 
 
-        adapter.setEventListener(new CustomCursorAdapter.EventListener() {
+        adapter.setEventListener(new CustomInterestAdapter.EventListener() {
             @Override
             public void onInterestClick(int position) {
                 Log.e("Main","clicked on position:"+position);
@@ -90,87 +91,12 @@ public class MainActivity extends AppCompatActivity {
         {
             setupViewPager(viewPager);
         }
-        /**
-         * Swipe to delete animations + toast
-         */
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-
-                return false;
-            }
-
-            @Override
-            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-
-                boolean notDeleted = false;
-                Snackbar snackbar = Snackbar
-                        .make(rc, "EVENT REMOVED", Snackbar.LENGTH_LONG)
-                        .setAction("UNDO", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
-                snackbar.addCallback(new Snackbar.Callback() {
-                    @Override
-                    public void onDismissed(Snackbar snackbar, int event) {
-                        if (event == DISMISS_EVENT_TIMEOUT) {
-                            long id = (long) viewHolder.itemView.getTag();
-
-                            interestBox.remove(id);
-                            updateNotes();
-                        }
-                    }
-                });
-                snackbar.show();
-
-
-            }
-
-            @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-
-                Bitmap icon;
-
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-
-                    View itemView = viewHolder.itemView;
-                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
-                    float width = height / 3;
-
-                    if (dX > 0) {
-                        p.setColor(Color.argb(255, 170, 255, 0));
-                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX, (float) itemView.getBottom());
-                        c.drawRect(background, p);
-                   /*     icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_edit_white);
-                        RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
-                        c.drawBitmap(icon,null,icon_dest,p);*/
-                    } else {
-
-                        int tmpColor = Math.round((int) ((dX / -2000.0) * 100));
-                        p.setColor(Color.argb(255, 172 + tmpColor, 162 - tmpColor, 162 - tmpColor));
-                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
-                        c.drawRect(background, p);
-                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_delete_white);
-                        RectF icon_dest = new RectF((float) itemView.getRight() - 2 * width, (float) itemView.getTop() + width, (float) itemView.getRight() - width, (float) itemView.getBottom() - width);
-                        c.drawBitmap(icon, null, icon_dest, p);
-                    }
-                }
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            }
-
-
-        }).attachToRecyclerView(rc);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new InterestListFragment(), "Places");
-        adapter.addFragment(new InterestListFragment(), "Nearby");
-
+        adapter.addFragment(new InterestLocalListFragment(), "Places");
         viewPager.setAdapter(adapter);
     }
 
@@ -207,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        updateNotes();
     }
 
     @Override
@@ -236,23 +161,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(goToAddInterest);
     }
 
-
-
-    public void updateNotes()
-    {
-        boolean hide_sync = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.hide_sync), false);
-
-
-        if(hide_sync)
-            interestQuery = interestBox.query().equal(Interest_.done, false)/*.order(Interest_.date)*/.build();
-        else
-            interestQuery = interestBox.query()./*order(Interest_.done).*/build();
-
-
-        this.interests = interestQuery.findLazy();
-        adapter.setInterests(interests);
-        for(Interest i : interests)
-            Log.e("main","text:"+i);
-    }
 
 }

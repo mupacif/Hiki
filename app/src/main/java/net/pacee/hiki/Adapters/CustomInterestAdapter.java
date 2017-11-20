@@ -1,4 +1,4 @@
-package net.pacee.hiki;
+package net.pacee.hiki.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,11 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CheckedTextView;
-import android.widget.TextView;
 
 import net.pacee.hiki.Model.Interest;
+import net.pacee.hiki.R;
 
 import java.util.List;
 
@@ -22,8 +21,7 @@ import io.objectbox.query.LazyList;
 
 
 
-public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapter.VH>{
-    private Cursor cursor;
+public class CustomInterestAdapter extends RecyclerView.Adapter<VH>  implements InterestAdapter{
     LazyList<Interest> interests;
     private Context context;
     private EventListener listener;
@@ -31,12 +29,13 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
     {
         this.listener = listener;
     }
-    public interface EventListener
-    {
-        public void onInterestClick(int position);
+
+    @Override
+    public void setInterests(List<Interest> interests) {
+
     }
 
-    public CustomCursorAdapter(Context context)
+    public CustomInterestAdapter(Context context)
     {
         this.context = context;
     }
@@ -45,7 +44,7 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.places_list,parent,false);
-        return new VH(view);
+        return new VH(view,listener);
     }
 
     @Override
@@ -53,7 +52,6 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
         Interest interest = interests.get(position);
         holder.name.setText(interest.getName());
         holder.name.setChecked(interest.getDone());
-
         holder.itemView.setTag(interest.getId());
         Log.e("adapter","name:"+interest.getName());
     }
@@ -69,25 +67,7 @@ public class CustomCursorAdapter extends RecyclerView.Adapter<CustomCursorAdapte
     public int getItemCount() {
         if(interests == null)
             return 0;
-
-
         return interests.size();
     }
 
-    public class VH extends ViewHolder implements View.OnClickListener {
-        @BindView(R.id.place_name)
-        CheckedTextView name;
-
-
-        public VH(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            listener.onInterestClick(getAdapterPosition());
-        }
-    }
 }

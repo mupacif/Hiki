@@ -12,6 +12,10 @@ import android.preference.PreferenceManager;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +39,7 @@ import net.pacee.hiki.Model.Interest;
 import net.pacee.hiki.Model.Interest_;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -80,6 +85,11 @@ public class MainActivity extends AppCompatActivity {
         interestBox = ((App) getApplication()).getBoxStore().boxFor(Interest.class);
         updateNotes();
 
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_activity_main);
+        if(viewPager != null)
+        {
+            setupViewPager(viewPager);
+        }
         /**
          * Swipe to delete animations + toast
          */
@@ -154,6 +164,44 @@ public class MainActivity extends AppCompatActivity {
 
 
         }).attachToRecyclerView(rc);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new InterestListFragment(), "Places");
+        adapter.addFragment(new InterestListFragment(), "Nearby");
+
+        viewPager.setAdapter(adapter);
+    }
+
+
+    static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        public Adapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitles.get(position);
+        }
     }
 
     @Override

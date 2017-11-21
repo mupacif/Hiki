@@ -31,7 +31,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -51,9 +50,7 @@ import butterknife.OnClick;
 import io.objectbox.Box;
 import io.objectbox.query.Query;
 
-/**
- * Created by mupac_000 on 17-11-17.
- */
+
 
 public class AddInterestActivity extends AppCompatActivity implements Validator.ValidationListener, GoogleApiClient.OnConnectionFailedListener {
 //region variable Declaration
@@ -139,7 +136,7 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
              tvAddInterestDate.setText(dateFormat.format(interest.getDate()));
 
 
-            Place place = new Places()
+
             tvAddInterestLocation.setText(interest.getAdress());
             isUpdating = true;
             saveBtn.setText("UPDATE");
@@ -206,7 +203,7 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
     @OnClick(R.id.bt_addinterest_save)
     public void save(View view)
     {
-        if(place!=null && !isUpdating)
+        if(place!=null || isUpdating)
         validator.validate();
         else
             Toast.makeText(this, "please select a location", Toast.LENGTH_LONG).show();
@@ -238,7 +235,7 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
     @OnClick(R.id.bt_addinterest_exit)
     public void exit()
     {
-        if(!interest.getDone() || isUpdating) {
+        if(!interest.getDone() && !isUpdating) {
             new AlertDialog.Builder(this)
                     .setTitle("Really Exit?")
                     .setMessage("Are you sure you want to exit?")

@@ -18,14 +18,14 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="***REMOVED***" />
+            android:value="" />
 
         <activity android:name=".MainActivity">
         </activity>
 
         <meta-data
             android:name="com.parse.SERVER_URL"
-            android:value="***REMOVED***" />
+            android:value="" />
         <meta-data
             android:name="com.parse.APPLICATION_ID"
             android:value="myAppId" />

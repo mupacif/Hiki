@@ -22,7 +22,7 @@ import io.objectbox.query.LazyList;
 
 public class CustomParseObjectAdapter extends RecyclerView.Adapter<VH> implements InterestAdapter {
 
-    LazyList<Interest> interests;
+    List<Interest> interests;
     private Context context;
     private EventListener listener;
     public void setEventListener(EventListener listener)
@@ -32,7 +32,8 @@ public class CustomParseObjectAdapter extends RecyclerView.Adapter<VH> implement
 
     @Override
     public void setInterests(List<Interest> interests) {
-
+        this.interests = interests;
+        notifyDataSetChanged();
     }
 
     public CustomParseObjectAdapter(Context context)

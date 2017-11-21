@@ -32,7 +32,8 @@ public class CustomInterestAdapter extends RecyclerView.Adapter<VH>  implements 
 
     @Override
     public void setInterests(List<Interest> interests) {
-
+        this.interests = (LazyList<Interest>)interests;
+        notifyDataSetChanged();
     }
 
     public CustomInterestAdapter(Context context)

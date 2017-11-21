@@ -124,6 +124,8 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
         validator.setValidationListener(this);
 
         isUpdating = false;
+
+        //récupérer le bundle envoyé à l'activité
         Bundle extra = getIntent().getExtras();
         if(extra != null) {
             interestId = extra.getLong("interestId", 0);
@@ -136,17 +138,19 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
             if(interest.getDate()!=null)
              tvAddInterestDate.setText(dateFormat.format(interest.getDate()));
 
+
+            Place place = new Places()
             tvAddInterestLocation.setText(interest.getAdress());
             isUpdating = true;
             saveBtn.setText("UPDATE");
 
-
+            //petits changement de l'ui quand l'utilisateur est en mode "done"
             if(interest.getDone()) {
                 saveBtn.setText("");
                 exitBtn.setText("BACK");
             }
         }
-
+        //petits changement de l'ui quand l'utilisateur est en mode update
         if(isUpdating) {
             button.setVisibility(View.VISIBLE);
             if(interest.getDone()) {

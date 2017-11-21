@@ -2,42 +2,26 @@ package net.pacee.hiki;
 
 import android.content.Intent;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.preference.PreferenceManager;
-
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.objectbox.Box;
-import io.objectbox.query.LazyList;
-import io.objectbox.query.Query;
 
 
 import net.pacee.hiki.Adapters.CustomInterestAdapter;
-import net.pacee.hiki.Model.Interest;
-import net.pacee.hiki.Model.Interest_;
+import net.pacee.hiki.Fragments.InterestLocalListFragment;
+import net.pacee.hiki.Fragments.InterestOnlineListFragment;
 
 
 import java.util.ArrayList;
@@ -47,16 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.activity_main_fab)
     FloatingActionButton fab;
-    @BindView(R.id.rv_main_main)
-    RecyclerView rc;
-
-    LazyList<Interest> interests;
-    private Paint p = new Paint();
 
 
-
-    private Box<Interest> interestBox;
-    private Query<Interest> interestQuery;
 
     CustomInterestAdapter adapter;
     @Override
@@ -66,37 +42,21 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        adapter = new CustomInterestAdapter(getApplicationContext());
-        rc.setLayoutManager(new LinearLayoutManager(this));
-        rc.setAdapter(adapter);
 
-
-        adapter.setEventListener(new CustomInterestAdapter.EventListener() {
-            @Override
-            public void onInterestClick(int position) {
-                Log.e("Main","clicked on position:"+position);
-                Interest i = interests.get(position);
-                long id = i.getId();
-                Intent goToAddInterest = new Intent(MainActivity.this,AddInterestActivity.class);
-                goToAddInterest.putExtra("interestId",id);
-                startActivity(goToAddInterest);
-
-            }
-        });
-        interestBox = ((App) getApplication()).getBoxStore().boxFor(Interest.class);
-        updateNotes();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_activity_main);
         if(viewPager != null)
         {
             setupViewPager(viewPager);
         }
-
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_activity_main);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new InterestLocalListFragment(), "Places");
+        adapter.addFragment(new InterestOnlineListFragment(), "Online");
         viewPager.setAdapter(adapter);
     }
 

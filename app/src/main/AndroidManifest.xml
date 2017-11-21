@@ -18,8 +18,8 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-
             android:value="" />
+
 
 
 
@@ -30,7 +30,6 @@
             android:name="com.parse.SERVER_URL"
 
             android:value="" />
-
 
 
         <meta-data

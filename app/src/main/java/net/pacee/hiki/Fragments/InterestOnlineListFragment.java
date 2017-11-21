@@ -90,6 +90,12 @@ public class InterestOnlineListFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        findAll();
+    }
+
     public InterestOnlineListFragment() {
     }
 

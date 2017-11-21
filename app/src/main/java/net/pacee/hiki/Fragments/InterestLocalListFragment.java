@@ -46,7 +46,7 @@ public class InterestLocalListFragment extends Fragment {
     @BindView(R.id.rv_fragment_interest_list)
     RecyclerView rc;
 
-    List<Interest> interests;
+    LazyList<Interest> interests;
 
     CustomInterestAdapter adapter;
     Paint p = new Paint();
@@ -163,6 +163,12 @@ public class InterestLocalListFragment extends Fragment {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.setInterests(lazyFind());
+    }
+
     public LazyList<Interest> lazyFind()
     {
         boolean hide_sync = PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(getString(R.string.hide_sync), false);
@@ -174,7 +180,9 @@ public class InterestLocalListFragment extends Fragment {
         else
             interestQuery = interestBox.query()./*order(Interest_.done).*/build();
 
-        return interestQuery.findLazy();
+        interests = interestQuery.findLazy();
+        Log.i("lazyFind","lazyList size:"+interests.size());
+        return interests;
     }
 
 

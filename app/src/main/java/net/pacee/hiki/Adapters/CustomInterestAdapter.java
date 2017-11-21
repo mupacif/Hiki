@@ -42,6 +42,7 @@ public class CustomInterestAdapter extends RecyclerView.Adapter<VH>  implements 
     }
 
 
+
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.places_list,parent,false);

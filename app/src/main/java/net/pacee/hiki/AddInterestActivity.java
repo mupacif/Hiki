@@ -206,7 +206,7 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
     @OnClick(R.id.bt_addinterest_save)
     public void save(View view)
     {
-        if(place!=null)
+        if(place!=null && !isUpdating)
         validator.validate();
         else
             Toast.makeText(this, "please select a location", Toast.LENGTH_LONG).show();
@@ -324,8 +324,8 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
         else
         {
             interest.setName(etAddInterestTitle.getText().toString());
-            //si l'adresse est différente
-            if(place.getLatLng().latitude != interest.getLat())
+            //si l"utilisateur a modifié l'adresse 
+            if(place!=null && place.getLatLng().latitude != interest.getLat())
             {
                 LatLng latLng = place.getLatLng();
                 Double lat = latLng.latitude;
@@ -336,6 +336,7 @@ public class AddInterestActivity extends AppCompatActivity implements Validator.
                 interest.setLat(lat);
                 interest.setLng(lng);
             }
+
             String note = etAddInterestNote.getText().toString();
             interest.setComment(note);
             interestBox.put(interest);

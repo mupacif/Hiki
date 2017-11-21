@@ -18,14 +18,22 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
+<<<<<<< HEAD
             android:value="" />
+=======
+            android:value="AIzaSyBS54mP49LpGO6xk_w2PN0c0suNuDeZKBM" />
+>>>>>>> 3c40f86b2726f5f58b9e409d7a8cf93422253240
 
         <activity android:name=".MainActivity">
         </activity>
 
         <meta-data
             android:name="com.parse.SERVER_URL"
+<<<<<<< HEAD
             android:value="" />
+=======
+            android:value="http://193.70.89.128:1337/parse/" />
+>>>>>>> 3c40f86b2726f5f58b9e409d7a8cf93422253240
         <meta-data
             android:name="com.parse.APPLICATION_ID"
             android:value="myAppId" />
